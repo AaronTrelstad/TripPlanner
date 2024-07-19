@@ -1,0 +1,34 @@
+.landing-container {
+    font-family: 'Arial, sans-serif';
+}
+
+.hero-section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero-images img {
+    width: 250px;
+    height: 250px;
+}
+
+.cta-button {
+    font-size: 1.2rem;
+}
+
+.content-section {
+    background-color: #f9f9f9;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+    .hero-images img {
+        width: 350px;
+        height: 350px;
+    }
+}

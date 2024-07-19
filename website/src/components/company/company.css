@@ -1,0 +1,18 @@
+.about-container {
+    font-family: 'Arial, sans-serif';
+}
+
+.company-section {
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.founder-section {
+    text-align: center;
+}
+
+.founder-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}

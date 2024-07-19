@@ -1,0 +1,17 @@
+.header {
+    position: sticky;
+    background-color: rgb(128, 58, 58);
+    border-color: black;
+    width: 100%;
+    height: 4rem;
+    display: flex;
+}
+
+.cluster {
+    display: flex;
+    padding-left: 10rem
+}
+
+.subCluster {
+    padding: 0.5rem;
+}

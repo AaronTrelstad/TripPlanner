@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+}
+
+.imageColumn {
+    flex: 1
+}
+
+.aboutColumn {
+    flex: 2
+}
+
+.profileText {
+    width: 10rem
+}
