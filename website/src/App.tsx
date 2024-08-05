@@ -1,5 +1,5 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import { AuthProvider } from "./AuthContext";
+import { createBrowserRouter, Navigate, Outlet, RouterProvider } from "react-router-dom";
+import { AuthProvider, useAuth } from "./AuthContext";
 import Header from './components/header/header'
 import LandingPage from './components/landing/landing'
 import UserProfile from './components/profile/userProfile'
@@ -13,6 +13,17 @@ import SearchPage from "./components/searchPage/searchPage";
 import Company from "./components/company/company";
 import Footer from "./components/footer/footer";
 import './index.css';
+import { ReactElement } from "react";
+
+interface ProtectedRouteProps {
+  element: ReactElement
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
+  const { user } = useAuth()
+
+  return user ? element : <Navigate to="/login" />
+}
 
 const router = createBrowserRouter([{
   path:"/",
@@ -32,7 +43,7 @@ const router = createBrowserRouter([{
     },
     {
       path: '/profile',
-      element: <UserProfile />
+      element: <ProtectedRoute element={<UserProfile />} />
     },
     {
       path: '/login',
@@ -52,7 +63,7 @@ const router = createBrowserRouter([{
     },
     {
       path: '/messages',
-      element: <Messages />
+      element: <ProtectedRoute element={<Messages />} />
     },
     {
       path: '/trending',
