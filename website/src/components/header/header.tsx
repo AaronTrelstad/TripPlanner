@@ -64,7 +64,6 @@ export default function Example() {
             <span className="sr-only">TravelMore</span>
             <img
               alt=""
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               className="h-8 w-auto"
             />
           </a>

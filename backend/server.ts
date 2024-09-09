@@ -6,7 +6,7 @@ import { createUser, login } from './authQueries'
 import { getUserInfo, updateProfile } from './userData'
 import { followUser, getFollowers, getFollowing } from './socialQueries'
 import { getTopLocations } from './locationData'
-import { getDiscussions, getMessages } from './messages'
+import { createPost, getPosts, getMessages } from './messages'
 
 const app: Application = express();
 const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
@@ -81,7 +81,7 @@ app.get('/api/getfollowing', authenticateUser, (req, res) => {
  * Publishes a discussion post
  */
 app.post('/api/publishdiscussion', authenticateUser, (req, res) => {
-
+    createPost(req, res)
 })
 
 /**
@@ -102,7 +102,7 @@ app.get('/api/gettoplocations', (req, res) => {
  * Gets discussion posts
  */
 app.get('/api/getdiscussions', (req, res) => {
-    getDiscussions(req, res)
+    getPosts(req, res)
 })
 
 /**

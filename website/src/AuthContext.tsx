@@ -5,13 +5,22 @@ interface AuthContextType {
   login: (token: string, user: User) => void;
   logout: () => void;
   user: User | null;
+  loading: boolean;
 }
 
 interface User {
-    id: string;
-    username: string;
-    email: string;
+  id: string;
+  username: string;
+  email: string;
 }
+
+const LoadingBackdrop: React.FC = () => {
+  return (
+    <div className="fixed inset-0 bg-gray-300 bg-opacity-80 flex items-center justify-center z-50">
+      <div className="w-16 h-16 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+    </div>
+  );
+};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -21,31 +30,34 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    let token = localStorage.getItem('token')
-    let user = localStorage.getItem('user')
+    const token = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
 
-    if (token) {
-        setLoggedIn(true)
-    } 
-
-    if (user) {
-        setUser(JSON.parse(user))
-    } 
-  }, [])
+    if (token && storedUser) {
+      setLoggedIn(true);
+      setUser(JSON.parse(storedUser));
+    } else {
+      setLoggedIn(false);
+      setUser(null);
+    }
+    setLoading(false);
+  }, []);
 
   const login = (token: string, user: User) => {
-    localStorage.setItem('token', token)
-    localStorage.setItem("user", JSON.stringify(user))
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
     setUser(user);
     setLoggedIn(true);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('user')
+    localStorage.removeItem('user');
+    setUser(null);
     setLoggedIn(false);
   };
 
@@ -54,10 +66,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     login,
     logout,
+    loading,
   };
 
   return (
     <AuthContext.Provider value={authContextValue}>
+      {loading && <LoadingBackdrop />}
       {children}
     </AuthContext.Provider>
   );
@@ -65,6 +79,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
+
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }

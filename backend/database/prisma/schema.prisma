@@ -18,6 +18,17 @@ model User {
   interests String[]
 }
 
+model Post {
+  id       Int     @id @default(autoincrement)
+  user_id  Int   
+  title    String
+  content  String
+  sub_posts Post[]
+  likes    Int
+  parent_id Int @nullable
+  datetime Date
+}
+
 
 
 

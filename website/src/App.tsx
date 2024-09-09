@@ -20,9 +20,13 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
-  const { user } = useAuth()
+  const { isLoggedIn, loading } = useAuth()
 
-  return user ? element : <Navigate to="/login" />
+  if (loading) {
+    return null;
+  }
+  
+  return isLoggedIn ? element : <Navigate to="/login" />
 }
 
 const router = createBrowserRouter([{
